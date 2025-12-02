@@ -1,17 +1,17 @@
 #include <string>
 #include <fstream>
-#include <iostream>
 #include <vector>
-#include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
-int main() {
+void first()
+{
     string input;
     int charIterator = 0;
     int rangesIterator = 0;
 
-    long long resultCounter = 0;
+    signed long long resultCounter = 0;
 
     ifstream MyReadFile("input.txt");
     getline(MyReadFile, input);
@@ -36,12 +36,12 @@ int main() {
         }
         charIterator++;
     }
-    cout << "Before first loop \n";
+    //cout << "Before first loop \n";
 
     // each range
     for (int i = 0; i < rangesList.size(); i++)
     {
-        cout << "Processing range " << i << "\n";
+        //cout << "Processing range " << i << "\n";
         string startValueAsString = "";
         string endValueAsString = "";
         bool firstValue = true;
@@ -51,7 +51,7 @@ int main() {
         for (int j = 0; j < length; j++)
         {
             auto myChar = rangesList[i][j];
-            string inputAsString = string{myChar};
+            string inputAsString = string{ myChar };
 
             if (inputAsString == "-")
             {
@@ -107,14 +107,131 @@ int main() {
 
             if (firstHalf + firstHalf == valueAsString)
             {
-                cout << "Found one! --> " << valueGettingChecked << "\n";
+                //cout << "Found one! --> " << valueGettingChecked << "\n";
                 resultCounter += valueGettingChecked;
             }
         }
 
-        cout << "After outer loop\n";
+        //cout << "After outer loop\n";
     }
     cout << "Result: " << resultCounter;
 
+}
+
+void second()
+{
+    string input;
+    int charIterator = 0;
+    int rangesIterator = 0;
+
+    long long resultCounter = 0;
+
+    ifstream MyReadFile("input.txt");
+    getline(MyReadFile, input);
+
+    vector<string> rangesList = {};
+
+    rangesList.push_back("");
+
+    while (input[charIterator] != '\0')
+    {
+        auto inputAsChar = input[charIterator];
+        string inputAsString = string{ inputAsChar };
+
+        if (inputAsString == ",")
+        {
+            rangesIterator++;
+            rangesList.push_back("");
+        }
+        else
+        {
+            rangesList[rangesIterator] += inputAsString;
+        }
+        charIterator++;
+    }
+
+    // each range
+    for (int i = 0; i < rangesList.size(); i++)
+    {
+        string startValueAsString = "";
+        string endValueAsString = "";
+        bool firstValue = true;
+
+        auto s = rangesList[i];
+        auto length = s.size();
+        for (int j = 0; j < length; j++)
+        {
+            auto myChar = rangesList[i][j];
+            string inputAsString = string{ myChar };
+
+            if (inputAsString == "-")
+            {
+                firstValue = false;
+            }
+            else if (firstValue)
+            {
+                startValueAsString += inputAsString;
+            }
+            else
+            {
+                endValueAsString += inputAsString;
+            }
+        }
+
+        auto temp1 = startValueAsString.c_str();
+        auto temp2 = endValueAsString.c_str();
+
+        long long smaller = std::stoll(temp1);
+        long long bigger = std::stoll(temp2);
+
+        // This value is under inspection
+        for (long long valueGettingChecked = smaller; valueGettingChecked <= bigger; valueGettingChecked++)
+        {
+            bool matched = false;
+            string valueAsString = to_string(valueGettingChecked);
+            // How many times current character fit in string?
+            string currentString = "";
+
+            int valueAsStringLength = valueAsString.length();
+            int valueAsStringForIterator = valueAsStringLength - 1;
+
+            for (int stringIterator = 0; stringIterator < valueAsStringForIterator; stringIterator++)
+            {
+                currentString += valueAsString[stringIterator];
+
+                int currentStringLenghtAsInt = currentString.length();
+
+                int howManyTimesCurrentFitValue = valueAsStringLength / currentStringLenghtAsInt;
+
+                if (howManyTimesCurrentFitValue > 1)
+                {
+                    string compareThis = "";
+                    for (long long myIterator = 1; myIterator <= howManyTimesCurrentFitValue; myIterator++)
+                    {
+                        compareThis += currentString;
+                    }
+
+                    if (compareThis == valueAsString && !matched)
+                    {
+                        // Increment counter
+                        resultCounter += valueGettingChecked;
+                        //cout << "Match! " << valueGettingChecked << "\n";
+                        matched = true;
+                    }
+                }
+            }
+        }
+    }
+    cout << "Result 2: " << resultCounter;
+}
+
+int main() {
+
+    cout << "Starting first\n";
+    first();
+    cout << "\nStarting second\n";
+    second();
+
     return 0;
 }
+
