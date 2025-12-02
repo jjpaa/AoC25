@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 using namespace std;
 
@@ -10,9 +11,9 @@ int main() {
     int charIterator = 0;
     int rangesIterator = 0;
 
-    int resultCounter = 0;
+    long long resultCounter = 0;
 
-    ifstream MyReadFile("input2.txt");
+    ifstream MyReadFile("input.txt");
     getline(MyReadFile, input);
 
     vector<string> rangesList = {};
@@ -38,16 +39,16 @@ int main() {
     cout << "Before first loop \n";
 
     // each range
-    for (size_t i = 0; i < rangesList.size(); i++)
+    for (int i = 0; i < rangesList.size(); i++)
     {
+        cout << "Processing range " << i << "\n";
         string startValueAsString = "";
         string endValueAsString = "";
-        int startValue = 0;
-        int endValue = 0;
         bool firstValue = true;
 
-        // each char in range
-        for (size_t j = 0; j < rangesList[i].size(); j++)
+        auto s = rangesList[i];
+        auto length = s.size();
+        for (int j = 0; j < length; j++)
         {
             auto myChar = rangesList[i][j];
             string inputAsString = string{myChar};
@@ -66,22 +67,40 @@ int main() {
             }
         }
 
-        int start = atoi(startValueAsString.c_str());
-        int end = atoi(endValueAsString.c_str());
-        
-        // I did not notice earlier but the second number might be bigger. Lets sort them.
-
+        // I thought the second number might be smaller.
+        //int smaller = 0;
+        //int bigger = 0;
+        //
+        //int first = atoi(startValueAsString.c_str());
+        //int second = atoi(endValueAsString.c_str());
+        //
+        //if (first <= second)
+        //{
+        //    smaller = first;
+        //    bigger = second;
+        //}
+        //else
+        //{
+        //    smaller = second;
+        //    bigger = first;
+        //}
 
         // Seek replicating numbers between values
         // Iterate all values between those values
-        for (int valueGettingChecked = start; valueGettingChecked <= end; valueGettingChecked++)
+
+        auto temp1 = startValueAsString.c_str();
+        auto temp2 = endValueAsString.c_str();
+
+        long long smaller = std::stoll(temp1);
+        long long bigger = std::stoll(temp2);
+
+        for (long long valueGettingChecked = smaller; valueGettingChecked <= bigger; valueGettingChecked++)
         {
             string valueAsString = to_string(valueGettingChecked);
-            
             string firstHalf = "";
 
             // Iterate halfway of the string
-            for (size_t i = 0; i < valueAsString.size() / 2; i++)
+            for (long long i = 0; i < valueAsString.size() / 2; i++)
             {
                 firstHalf += valueAsString[i];
             }
@@ -95,7 +114,7 @@ int main() {
 
         cout << "After outer loop\n";
     }
-    cout << "End";
+    cout << "Result: " << resultCounter;
 
     return 0;
 }
