@@ -4,4 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="AOC25/AOC25.vcxproj" Id="08b24b83-96a7-46cd-a5b2-eeae8c7b44ca" />
+  <Project Path="Day2/Day2.vcxproj" Id="46962c10-732c-4c34-bdf6-f149693a6b53" />
 </Solution>
