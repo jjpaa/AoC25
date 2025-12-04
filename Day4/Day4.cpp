@@ -165,7 +165,7 @@ void second()
                 }
             }
             // Separate rows
-            cout << "\n";
+            //cout << "\n";
         }
     }
 
@@ -207,7 +207,7 @@ void first()
         auto columnsSize = area[row].size();
         for (int column = 0; column < columnsSize; column++)
         {
-            cout << area[row][column];
+            //cout << area[row][column];
 
             // Is there value above to this?
             bool above = false;
@@ -318,7 +318,7 @@ void first()
             }
         }
         // Separate rows
-        cout << "\n";
+        //cout << "\n";
     }
     cout << AccessibleRolls <<"\n";
 }
