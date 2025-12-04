@@ -6,4 +6,5 @@
   <Project Path="AOC25/AOC25.vcxproj" Id="08b24b83-96a7-46cd-a5b2-eeae8c7b44ca" />
   <Project Path="Day2/Day2.vcxproj" Id="46962c10-732c-4c34-bdf6-f149693a6b53" />
   <Project Path="Day3/Day3.vcxproj" Id="218742d2-d3c5-428a-98ca-2dfaf7dc22f0" />
+  <Project Path="Day4/Day4.vcxproj" Id="f8230183-dfdd-4be9-99b0-46c5d4f1131f" />
 </Solution>
