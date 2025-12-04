@@ -64,7 +64,7 @@ void first()
 void second()
 {
     signed long long resultCounter = 0;
-    ifstream MyReadFile("input2.txt");
+    ifstream MyReadFile("input.txt");
     while (true)
     {
         string input;
@@ -77,16 +77,16 @@ void second()
 
         vector<int> v = {};
 
-        cout << "vector before  : ";
+        //cout << "vector before  : ";
 
         for (int i = 0; i <= 11; i++)
         {
             v.push_back(0);
-            cout << v[i];
+            //cout << v[i];
         }
 
         // Do for each input value. Except last
-        for (int inputIterator = 0; inputIterator < input.length() - 1; inputIterator++)
+        for (int inputIterator = 0; inputIterator < input.length(); inputIterator++)
         {
             char inputChar = input[inputIterator];
             int inputAsInt = inputChar - '0';
@@ -94,17 +94,37 @@ void second()
             int thisManyLeft = input.length() - inputIterator;
             bool putToZero = false;
 
-            //For each spot (12) on the vector
-            for (int spotIterator = 0; spotIterator <= 11; spotIterator++)
+            int iterationSpotStartPoint = 12 - thisManyLeft;
+
+            if (iterationSpotStartPoint < 0)
             {
+                iterationSpotStartPoint = 0;
+            }
+
+            //cout << "iterationSpotStartPoint: " << iterationSpotStartPoint << "\n";
+
+            //if (inputAsInt == 9)
+            //{
+            //    cout << "";
+            //}
+
+            //For each spot (12) on the vector
+            for (int spotIterator = iterationSpotStartPoint; spotIterator <= 11; spotIterator++)
+            {
+                if (spotIterator == 11)
+                {
+                    cout << "";
+                }
+
                 if (putToZero)
                 {
                     v[spotIterator] = 0;
+                    //cout << "Inserting " << 0 << " To Spot " << spotIterator << "\n";
                 }
                 else
                 {
                     // if currentspot is still possible
-                    if (thisManyLeft >= spotIterator)
+                    if (thisManyLeft >= 12 - spotIterator)
                     {
                         // Swap the most top one and put other after to zero
                         // if there is still enough number to come.
@@ -118,33 +138,46 @@ void second()
 
                         if (inputAsInt > currentValueOnSpot)
                         {
+
+                            //cout << "Inserting " << inputAsInt << " To Spot " << spotIterator << "\n";
+
                             // Value is bigger than current and there is more to come
                             v[spotIterator] = inputAsInt;
                             // Put rest to zero
                             putToZero = true;
+
+                            //cout << "Input " << inputAsInt << " was bigger than existing " << currentValueOnSpot << "\n";
+                        }
+                        else
+                        {
+                            //cout << "Input " << inputAsInt << " was smaller than existing " << currentValueOnSpot << "\n";
                         }
                     }
+                    else
+                    {
+                        //cout << "Won't do. This many left" << thisManyLeft << " spotiterator " << spotIterator << "\n";
+                    }
                 }
-
             }
+            //cout << "processed input " << inputIterator << "\n";
         }
 
-        cout << "\nCurrent vector : ";
+        //cout << "Vector : ";
+
+        //for (int i = 0; i <= 11; i++)
+        //{
+        //    cout << v[i];
+        //}
+        //cout << "\n";
+
+        string numsTogether = "";
 
         for (int i = 0; i <= 11; i++)
         {
-            cout << v[i];
-        }
-        cout << "\n";
-
-        string together = "";
-
-        for (int i = 0; i < 11; i++)
-        {
-            together += std::to_string(v[i]);
+            numsTogether += std::to_string(v[i]);
         }
 
-        int increment = std::stoll(together);
+        signed long long increment = std::stoll(numsTogether);
         resultCounter = resultCounter + increment;
     }
     cout << "\nResult 2: " << resultCounter;
