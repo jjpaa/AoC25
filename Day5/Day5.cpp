@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
     bool seekRanges = true;
-    ifstream MyReadFile("input2.txt");
+    ifstream MyReadFile("input.txt");
     tuple <long long, long long> rangeTuple;
     vector<tuple<long long, long long>> ranges = {};
 
@@ -56,11 +56,36 @@ int main()
             }
             else
             {
+                // input --> is string and is a large number 
+                auto constCharPtr = input.c_str();
+                long long inputAsLongLong = std::stoll(constCharPtr);
+
+                bool fitsRange = false;
                 // Go through each range and if value fits any --> exit and increment counter
 
+                for (long long t = 0; t < ranges.size(); t++)
+                {
+                    // Check input falls in between the tuple
+                    auto myTuple = ranges[t];
+                    auto first = get<0>(myTuple);
+                    auto second = get<1>(myTuple);
+
+                    if (inputAsLongLong >= first && inputAsLongLong <= second)
+                    {
+                        fitsRange = true;
+                        cout << "Fits range " << input << "\n";
+                        break;
+                    }
+                }
+
                 // Match found
-                counter++;
+                if (fitsRange)
+                {
+                    counter++;
+                }
             }
         }
     }
+
+    cout << counter;
 }
