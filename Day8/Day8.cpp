@@ -4,6 +4,7 @@
 #include <vector>
 #include <windows.h>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,12 +18,17 @@ struct circuit
         vector<point> points = {};
 };
 
-double CalculateDistance(long long x, long long y, long long z)
+double CalculateDistance(point one, point two)
 {
     // Formula
-    //    ____________________
-    // --v (x^2 + y^2 + z^2)
-    return sqrt(x * x + y * y + z * z);
+    //    ________________________________________
+    // --v (x1 - x2)^2 + (y1 - y2)^2 + (z1-z2)^2)
+
+    auto temp = pow((one.x - two.x), 2);
+    auto temp2 = pow((one.y - two.y), 2);
+    auto temp3 = pow((one.z - two.z), 2);
+
+    return sqrt(temp + temp2 + temp3);
 }
 
 void First()
@@ -56,9 +62,9 @@ void First()
             auto temp2 = secondAsString.c_str();
             auto temp3 = thirdAsString.c_str();
 
-            long long x = std::stoll(temp1);
-            long long y = std::stoll(temp2);
-            long long z = std::stoll(temp3);
+            int x = std::stoi(temp1);
+            int y = std::stoi(temp2);
+            int z = std::stoi(temp3);
 
             point p = {};
             p.x = x;
@@ -76,29 +82,36 @@ void First()
 
     while (true)
     {
-        long long circuitIndexA;
-        long long circuitIndexB;
+        int circuitIndexA;
+        int circuitIndexB;
+
+        double smallestDistance = 999999999999;
 
         // Start iterating over junctions
-        for (long long circuitIndex = 0; circuitIndex < circuits.size(); circuitIndex++)
+        for (int circuitIndex = 0; circuitIndex < circuits.size(); circuitIndex++)
         {
             auto circuit = circuits[circuitIndex];
-            for (long long pointsIndex = 0; pointsIndex < circuit.points.size(); pointsIndex++)
+            for (int pointsIndex = 0; pointsIndex < circuit.points.size(); pointsIndex++)
             {
                 auto point = circuit.points[pointsIndex];
 
                 // Start iterating over junctions again and skip current circuit index
-                for (long long cI = 0; cI < circuits.size(); cI++)
+                for (int cI = 0; cI < circuits.size(); cI++)
                 {
                     if (cI != circuitIndex)
                     {
                         auto c = circuits[cI];
-                        for (long long pI = 0; pI < c.points.size(); pI++)
+                        for (int pI = 0; pI < c.points.size(); pI++)
                         {
                             auto point2 = c.points[pI];
+                            auto distance = CalculateDistance(point, point2);
 
-                            // TODO add here the calculation call and comparison etc.
-
+                            if (distance < smallestDistance)
+                            {
+                                smallestDistance = distance;
+                                circuitIndexA = circuitIndex;
+                                circuitIndexB = cI;
+                            }
                         }
                     }
                 }
@@ -106,11 +119,12 @@ void First()
         }
         // Combine circuitIndexA and circuitIndexB
         // Iterate over circuit b and add them to circuitA
-        for (size_t p = 0; p < circuits[circuitIndexB].points.size(); p++)
+        for (int p = 0; p < circuits[circuitIndexB].points.size(); p++)
         {
             auto point = circuits[circuitIndexB].points[p];
             circuits[circuitIndexA].points.push_back(point);
         }
+
         // Remove circuit B
         circuits.erase(circuits.begin() + circuitIndexB);
 
@@ -127,6 +141,9 @@ void First()
     }
 
     // Print result
+    // Multiply the size of 3 largest circuits
+
+    // Find out which are largest
 
 }
 
