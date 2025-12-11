@@ -106,6 +106,17 @@ void First()
                             auto point2 = c.points[pI];
                             auto distance = CalculateDistance(point, point2);
 
+                            //if (point.x == 906 && point.y && 360 && point.z == 560 &&
+                            // point2.x == 805 && point2.y && 96 && point2.z == 715)
+                            //{
+                            //    cout << "";
+                            //    // 906,360,560 and 805,96,715
+                            //}
+
+                            // Everything seems to work untill... Then again this does work as well
+                            //The next two junction boxes are 431, 825, 988 and 425, 690, 689.
+                            //    Because these two junction boxes were already in the same circuit, nothing happens!
+
                             if (distance < smallestDistance)
                             {
                                 smallestDistance = distance;
@@ -130,7 +141,7 @@ void First()
 
         connectionCounter++;
 
-        if (connectionCounter < numOfConnectionsNeeded)
+        if (connectionCounter < numOfConnectionsNeeded - 1) // Is -1 one the fix?
         {
         }
         else
