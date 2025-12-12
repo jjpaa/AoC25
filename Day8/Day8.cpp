@@ -33,10 +33,10 @@ double CalculateDistance(point one, point two)
 
 void First()
 {
-    const int numOfConnectionsNeeded = 10;
+    const int numOfConnectionsNeeded = 1000;
     int connectionCounter = 0;
 
-    ifstream MyReadFile("input.txt");
+    ifstream MyReadFile("input2.txt");
 
     vector<circuit> circuits = {};
 
@@ -128,6 +128,9 @@ void First()
                 }
             }
         }
+
+        cout << "Combining circuits\n";
+
         // Combine circuitIndexA and circuitIndexB
         // Iterate over circuit b and add them to circuitA
         for (int p = 0; p < circuits[circuitIndexB].points.size(); p++)
@@ -143,6 +146,7 @@ void First()
 
         if (connectionCounter < numOfConnectionsNeeded - 1) // Is -1 one the fix?
         {
+            cout << "Connection counter: " << connectionCounter << "\n";
         }
         else
         {
@@ -156,6 +160,33 @@ void First()
 
     // Find out which are largest
 
+    size_t largest = 0;
+    size_t secondLargest = 0;
+    size_t thirdLargest = 0;
+
+    for (int i = 0; i < circuits.size(); i++)
+    {
+        auto size = circuits[i].points.size();
+
+        if (size > largest)
+        {
+            thirdLargest = secondLargest;
+            secondLargest = largest;
+            largest = size;
+        }
+        else if (size > secondLargest)
+        {
+            thirdLargest = secondLargest;
+            secondLargest = size;
+        }
+        else if (size > thirdLargest)
+        {
+            thirdLargest = size;
+        }
+    }
+
+    long long result = largest * secondLargest * thirdLargest;
+    cout << result;
 }
 
 int main()
