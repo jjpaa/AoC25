@@ -137,11 +137,11 @@ void First()
 
         connectionCounter++;
 
-        //std::cout << "Combining Ended\n";
+        std::cout << "Connection counter: " << connectionCounter << "\n";
 
-        if (connectionCounter < numOfConnectionsNeeded - 1) // Is -1 one the fix?
+        if (connectionCounter < numOfConnectionsNeeded -1)
         {
-            std::cout << "Connection counter: " << connectionCounter << "\n";
+
         }
         else
         {
@@ -179,6 +179,10 @@ void First()
             thirdLargest = size;
         }
     }
+
+    std::cout << largest << "\n";
+    std::cout << secondLargest << "\n";
+    std::cout << thirdLargest << "\n";
 
     long long result = largest * secondLargest * thirdLargest;
     std::cout << result;
