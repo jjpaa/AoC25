@@ -2,9 +2,9 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <windows.h>
+//#include <windows.h>
 #include <cmath>
-#include <algorithm>
+//#include <algorithm>
 
 using namespace std;
 
@@ -80,6 +80,8 @@ void First()
     // Compare each value to each other one and save the details of the two closest.
     // Note that the two values should not be part of the same junction.
 
+    std::cout << "Setup done\n";
+
     while (true)
     {
         int circuitIndexA;
@@ -87,8 +89,10 @@ void First()
 
         double smallestDistance = 999999999999;
 
+        auto circuitsSize = circuits.size();
+
         // Start iterating over junctions
-        for (int circuitIndex = 0; circuitIndex < circuits.size(); circuitIndex++)
+        for (int circuitIndex = 0; circuitIndex < circuitsSize; circuitIndex++)
         {
             auto circuit = circuits[circuitIndex];
             for (int pointsIndex = 0; pointsIndex < circuit.points.size(); pointsIndex++)
@@ -96,7 +100,7 @@ void First()
                 auto point = circuit.points[pointsIndex];
 
                 // Start iterating over junctions again and skip current circuit index
-                for (int cI = 0; cI < circuits.size(); cI++)
+                for (int cI = 0; cI < circuitsSize; cI++)
                 {
                     if (cI != circuitIndex)
                     {
@@ -105,17 +109,6 @@ void First()
                         {
                             auto point2 = c.points[pI];
                             auto distance = CalculateDistance(point, point2);
-
-                            //if (point.x == 906 && point.y && 360 && point.z == 560 &&
-                            // point2.x == 805 && point2.y && 96 && point2.z == 715)
-                            //{
-                            //    cout << "";
-                            //    // 906,360,560 and 805,96,715
-                            //}
-
-                            // Everything seems to work untill... Then again this does work as well
-                            //The next two junction boxes are 431, 825, 988 and 425, 690, 689.
-                            //    Because these two junction boxes were already in the same circuit, nothing happens!
 
                             if (distance < smallestDistance)
                             {
@@ -129,7 +122,7 @@ void First()
             }
         }
 
-        cout << "Combining circuits\n";
+        //std::cout << "Combining started\n";
 
         // Combine circuitIndexA and circuitIndexB
         // Iterate over circuit b and add them to circuitA
@@ -144,9 +137,11 @@ void First()
 
         connectionCounter++;
 
+        //std::cout << "Combining Ended\n";
+
         if (connectionCounter < numOfConnectionsNeeded - 1) // Is -1 one the fix?
         {
-            cout << "Connection counter: " << connectionCounter << "\n";
+            std::cout << "Connection counter: " << connectionCounter << "\n";
         }
         else
         {
@@ -186,7 +181,10 @@ void First()
     }
 
     long long result = largest * secondLargest * thirdLargest;
-    cout << result;
+    std::cout << result;
+
+    string pause;
+    cin >> pause;
 }
 
 int main()
